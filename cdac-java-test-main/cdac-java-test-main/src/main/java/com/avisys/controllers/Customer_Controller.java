@@ -80,14 +80,23 @@ public class Customer_Controller {
 
 	@PostMapping("/CreateCustomer")
 	public ResponseEntity<Object> createCustomer(@Valid @RequestBody CustomerRequest request) {
-		Customer existingCustomer = customerRepository.findByMobileNumber(request.getMobileNumber());
+		Customer existingCustomer = customerRepository.findByMobileNumber(request.getMobileNumbers().get(0));
 		if (existingCustomer != null) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("Unable to create Customer. Mobile number already present.");
 		}
-		Customer newCustomer = new Customer(request.getFirstName(), request.getLastName(), request.getMobileNumber());
+		
+		//fourth requirement
+		Set<MobileNumber> mobileNumbers = new HashSet<>();
+		for (String mobileNumber : request.getMobileNumbers()) {
+			mobileNumbers.add(new MobileNumber(mobileNumber));
+		}
+		
+		Customer newCustomer = new Customer(request.getFirstName(), request.getLastName(), mobileNumbers);
 		customerRepository.save(newCustomer);
 		return ResponseEntity.status(HttpStatus.CREATED).body("Customer created successfully.");
 	}
+
+
 
 }
