@@ -17,4 +17,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             "AND (:lastName is null OR lower(c.lastName) LIKE lower(concat('%', :lastName, '%'))) " +
             "AND (:mobileNumber is null OR c.mobileNumber = :mobileNumber)")
     List<Customer> search(String firstName, String lastName, String mobileNumber);
+    
+    //findByMobileNumber is a custom method for second requirement
+    List<Customer> findByMobileNumber(String mobileNumber);
 }
