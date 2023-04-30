@@ -96,6 +96,23 @@ public class Customer_Controller {
 		customerRepository.save(newCustomer);
 		return ResponseEntity.status(HttpStatus.CREATED).body("Customer created successfully.");
 	}
+	
+	
+	//for fifth requirement
+	@DeleteMapping("/customer")
+	public ResponseEntity<Object> deleteCustomerByMobileNumber(@RequestParam String mobileNumber) {
+		//Check if a customer with the given mobile number exists in the database
+	    Customer customer = customerRepository.findByMobileNumber(mobileNumber);
+	    // If the customer doesn't exist
+	    if (customer == null) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                .body("Unable to delete customer. Mobile number not found.");
+	    }
+	    //if customer exists
+	    customerRepository.delete(customer);
+	    return ResponseEntity.status(HttpStatus.OK).body("Customer deleted successfully.");
+	}
+
 
 
 
