@@ -20,4 +20,19 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     
     //findByMobileNumber is a custom method for second requirement
     List<Customer> findByMobileNumber(String mobileNumber);
+    
+    //for fifth requirement
+    void deleteByMobileNumber(String mobileNumber);
+    
+    
+    //sixth requirement
+    @Modifying
+    @Query(value = "INSERT INTO customer_mobile_number (customer_id, mobile_number) VALUES (:customerId, :mobileNumber)", nativeQuery = true)
+    void addMobileNumber(@Param("customerId") Long customerId, @Param("mobileNumber") String mobileNumber);
+
+    
+    ////sixth requirement
+    @Modifying
+    @Query(value = "DELETE FROM customer_mobile_number WHERE customer_id = :customerId AND mobile_number = :mobileNumber", nativeQuery = true)
+    void deleteMobileNumber(@Param("customerId") Long customerId, @Param("mobileNumber") String mobileNumber);
 }

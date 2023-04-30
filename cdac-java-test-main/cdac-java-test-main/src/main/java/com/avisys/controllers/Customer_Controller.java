@@ -112,6 +112,44 @@ public class Customer_Controller {
 	    customerRepository.delete(customer);
 	    return ResponseEntity.status(HttpStatus.OK).body("Customer deleted successfully.");
 	}
+	
+	//sixth requirement
+	// Add a mobile number for an existing customer
+	@PutMapping("/{mobileNumber}/addMobileNumber")
+	public ResponseEntity<Object> addMobileNumber(@PathVariable String mobileNumber, @RequestBody String newMobileNumber) {
+	    Customer customer = customerRepository.findByMobileNumber(mobileNumber);
+	    if (customer == null) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	            .body("Customer not found for mobile number " + mobileNumber);
+	    }
+	    // Check if the new mobile number already exists for this customer
+	    if (customer.getMobileNumbers().contains(newMobileNumber)) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+	            .body("Mobile number " + newMobileNumber + " already exists for this customer");
+	    }
+	    customer.getMobileNumbers().add(newMobileNumber);
+	    customerRepository.save(customer);
+	    return ResponseEntity.status(HttpStatus.OK).body("Mobile number added successfully");
+	}
+
+	////sixth requirement
+	// Delete a mobile number from an existing customer
+	@PutMapping("/{mobileNumber}/deleteMobileNumber")
+	public ResponseEntity<Object> deleteMobileNumber(@PathVariable String mobileNumber, @RequestBody String mobileNumberToDelete) {
+	    Customer customer = customerRepository.findByMobileNumber(mobileNumber);
+	    if (customer == null) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	            .body("Customer not found for mobile number " + mobileNumber);
+	    }
+	    if (!customer.getMobileNumbers().contains(mobileNumberToDelete)) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+	            .body("Mobile number " + mobileNumberToDelete + " not found for this customer");
+	    }
+	    customer.getMobileNumbers().remove(mobileNumberToDelete);
+	    customerRepository.save(customer);
+	    return ResponseEntity.status(HttpStatus.OK).body("Mobile number deleted successfully");
+	}
+
 
 
 
