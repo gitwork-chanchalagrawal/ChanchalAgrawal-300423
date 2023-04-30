@@ -18,11 +18,10 @@ public class CustomerResponse {
     @NotBlank(message = "Last name is required")
     private String lastName;
 
-    @JsonProperty("mobileNumber")
-    @NotBlank(message = "Mobile number is required")
-    //@Pattern specify a regex pattern for the mobileNumber field
-    @Pattern(regexp = "\\d{10}", message = "Mobile number must be 10 digits")
-    private String mobileNumber;
+  
+    @JsonProperty("mobileNumbers")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private List<MobileNumberResponse> mobileNumbers = new ArrayList<>();
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonProperty("id")
@@ -30,17 +29,17 @@ public class CustomerResponse {
 
     public CustomerResponse() {}
 
-    public CustomerResponse(String firstName, String lastName, String mobileNumber) {
+    public CustomerResponse(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.mobileNumber = mobileNumber;
+       
     }
 
-    public CustomerResponse(Long id, String firstName, String lastName, String mobileNumber) {
+    public CustomerResponse(Long id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.mobileNumber = mobileNumber;
+       
     }
 
     public String getFirstName() {
@@ -59,12 +58,12 @@ public class CustomerResponse {
         this.lastName = lastName;
     }
 
-    public String getMobileNumber() {
-        return mobileNumber;
+    public List<MobileNumberResponse> getMobileNumbers() {
+        return mobileNumbers;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public void setMobileNumbers(List<MobileNumberResponse> mobileNumbers) {
+        this.mobileNumbers = mobileNumbers;
     }
 
     public Long getId() {

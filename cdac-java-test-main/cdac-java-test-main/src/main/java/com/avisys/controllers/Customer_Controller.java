@@ -28,18 +28,26 @@ public class Customer_Controller {
 	// first name, last name, or mobile number.
 	@GetMapping("/search")
 	public List<CustomerResponse> searchCustomers(
-			// @RequestParam annotation is used to specify the query parameters for the
-			// search
-			@RequestParam(value = "firstName", required = false) String firstName,
-			@RequestParam(value = "lastName", required = false) String lastName,
-			@RequestParam(value = "mobileNumber", required = false) String mobileNumber) {
-		// The method calls the search() method of the customerRepository to retrieve
-		// the customers that match the search criteria, and then maps the retrieved
-		// customers to CustomerResponse objects using the mapCustomersToResponses()
-		// method.
-		List<Customer> customers = customerRepository.search(firstName, lastName, mobileNumber);
-		return mapCustomersToResponses(customers);
+	    @RequestParam(value = "firstName", required = false) String firstName,
+	    @RequestParam(value = "lastName", required = false) String lastName,
+	    @RequestParam(value = "mobileNumber", required = false) String mobileNumber) {
+	    List<Customer> customers = customerRepository.search(firstName, lastName, mobileNumber);
+	    List<CustomerResponse> responses = new ArrayList<>();
+	    for (Customer customer : customers) {
+	        List<String> mobileNumbers = new ArrayList<>();
+	        for (MobileNumber number : customer.getMobileNumbers()) {
+	            mobileNumbers.add(number.getNumber());
+	        }
+	        responses.add(new CustomerResponse(
+	            customer.getId(),
+	            customer.getFirstName(),
+	            customer.getLastName(),
+	            mobileNumbers
+	        ));
+	    }
+	    return responses;
 	}
+
 
 	// it is a private helper method that maps a list of Customer objects to a list
 	// of CustomerResponse objects.
@@ -49,6 +57,8 @@ public class Customer_Controller {
 	private List<CustomerResponse> mapCustomersToResponses(List<Customer> customers) {
 		List<CustomerResponse> responses = new ArrayList<>();
 		for (Customer customer : customers) {
+			//for third requirement
+			List<String> mobileNumbers = customer.getMobileNumbers();
 			responses.add(
 					new CustomerResponse(customer.getFirstName(), customer.getLastName(), customer.getMobileNumber()));
 		}

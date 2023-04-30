@@ -1,4 +1,4 @@
-package com.avisys.cim.entities;
+package com.avisys.entities;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -11,9 +11,9 @@ public class CustomerRequest {
     @NotBlank(message = "Last name is required")
     private String lastName;
 
-    @NotBlank(message = "Mobile number is required")
-    @Pattern(regexp = "\\d{10}", message = "Mobile number must be 10 digits")
-    private String mobileNumber;
+    private List<@NotBlank(message = "Mobile number is required") 
+    			@Pattern(regexp = "\\d{10}", message = "Mobile number must be 10 digits")
+    			String> mobileNumbers;
 
     public CustomerRequest() {}
 
@@ -39,11 +39,12 @@ public class CustomerRequest {
         this.lastName = lastName;
     }
 
-    public String getMobileNumber() {
-        return mobileNumber;
+    public List<String> getMobileNumbers() {
+        return mobileNumbers;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public void setMobileNumbers(List<String> mobileNumbers) {
+        this.mobileNumbers = mobileNumbers;
+    
     }
 }

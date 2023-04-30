@@ -1,4 +1,4 @@
-package com.avisys.cim.entities;
+package com.avisys.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,8 +21,9 @@ public class Customer {
 	@Column(name = "LAST_NAME", nullable = false)
 	private String lastName;
 
-	@Column(name = "MOBILE_NUMBER", unique = true, nullable = false)
-	private String mobileNumber;
+	//for third requirement
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+	private List<MobileNumber> mobileNumbers;
 
 	public Long getId() {
 		return id;
@@ -48,12 +49,21 @@ public class Customer {
 		this.lastName = lastName;
 	}
 
-	public String getMobileNumber() {
-		return mobileNumber;
+	public List<MobileNumber> getMobileNumbers() {
+		return mobileNumbers;
 	}
 
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
+	public void setMobileNumbers(List<MobileNumber> mobileNumbers) {
+		this.mobileNumbers = mobileNumbers;
+	}
+	
+	public void addMobileNumber(MobileNumber mobileNumber) {
+		if (this.mobileNumbers == null) {
+			this.mobileNumbers = new ArrayList<>();
+		}
+		this.mobileNumbers.add(mobileNumber);
+		mobileNumber.setCustomer(this);
+	}
 	}
 
 }
