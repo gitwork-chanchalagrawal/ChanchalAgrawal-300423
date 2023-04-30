@@ -22,8 +22,9 @@ public class Customer {
 	private String lastName;
 
 	//for third requirement
+	
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-	private List<MobileNumber> mobileNumbers;
+	private List<MobileNumber> mobileNumbers; //for fourth requirement
 
 	public Long getId() {
 		return id;
@@ -53,10 +54,12 @@ public class Customer {
 		return mobileNumbers;
 	}
 
+	//for fourth requirement
 	public void setMobileNumbers(List<MobileNumber> mobileNumbers) {
 		this.mobileNumbers = mobileNumbers;
 	}
 	
+	//for fourth requirement
 	public void addMobileNumber(MobileNumber mobileNumber) {
 		if (this.mobileNumbers == null) {
 			this.mobileNumbers = new ArrayList<>();

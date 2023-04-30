@@ -1,0 +1,66 @@
+1.Get all customers: http://localhost:8080/api/customers/
+2.Search customers: http://localhost:8080/api/customers/search?firstName={firstName}&lastName={lastName}&mobileNumber={mobileNumber}
+3.Create a new customer: http://localhost:8080/api/customers/CreateCustomer
+4.Delete a customer by mobile number: http://localhost:8080/api/customers/customer?mobileNumber={mobileNumber}
+5.Add a mobile number for an existing customer: http://localhost:8080/api/customers/{mobileNumber}/addMobileNumber
+6.delete mobile number:URL: http://localhost:8080/api/customers/{mobileNumber}/deleteMobileNumber
+
+Sample Responses
+
+1.[  {    "id": 1,    "first_name": "Alan",    "last_name": "Smith",    "mobile_number": 9111111111  },  {    "id": 2,    "first_name": "Joe",    "last_name": "Turing",    "mobile_number": 9111111112  },  {    "id": 3,    "first_name": "John",    "last_name": "Smith",    "mobile_number": 9111111113  },  {    "id": 4,    "first_name": "Kathy",    "last_name": "Sierra",    "mobile_number": 9111111114  }]
+
+
+2.
+http://localhost:8080/api/customers/search?firstName=Alan&lastName=Smith&mobileNumber=9111111111
+
+
+{
+  "customers": [
+    {
+      "id": 1,
+      "firstName": "Alan",
+      "lastName": "Smith",
+      "mobileNumber": "9111111111"
+    }
+  ]
+}
+
+
+3. {
+   "id": 5,
+   "firstName": "Jane",
+   "lastName": "Doe",
+   "mobileNumber": "9111111115",
+   "createdAt": "2023-04-30T12:00:00Z",
+   "updatedAt": "2023-04-30T12:00:00Z"
+}
+
+4.
+{
+  "message": "Customer with mobile number {mobileNumber} deleted successfully"
+}
+
+4.
+{
+  "message": "Customer with mobile number {mobileNumber} not found"
+}
+
+
+5.
+http://localhost:8080/api/customers/{mobileNumber}/addMobileNumber
+Request: PUT http://localhost:8080/api/customers/9111111111/addMobileNumber
+Body: {"mobileNumber":"9222222222"}
+Response: {"id":1,"firstName":"Alan","lastName":"Smith","mobileNumbers":["9111111111","9222222222"]}
+
+6.
+request:
+http://localhost:8080/api/customers/9111111111/deleteMobileNumber
+
+response:
+HTTP status code: 200 OK
+{
+"id": 1,
+"firstName": "Alan",
+"lastName": "Smith",
+"mobileNumbers": []
+}

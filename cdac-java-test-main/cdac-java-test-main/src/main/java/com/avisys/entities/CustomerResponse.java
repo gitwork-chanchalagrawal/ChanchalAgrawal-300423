@@ -18,7 +18,7 @@ public class CustomerResponse {
     @NotBlank(message = "Last name is required")
     private String lastName;
 
-  
+    //for fourth requirement
     @JsonProperty("mobileNumbers")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<MobileNumberResponse> mobileNumbers = new ArrayList<>();
@@ -58,10 +58,12 @@ public class CustomerResponse {
         this.lastName = lastName;
     }
 
+    //for fourth requirement
     public List<MobileNumberResponse> getMobileNumbers() {
         return mobileNumbers;
     }
 
+    //for fourth requirement
     public void setMobileNumbers(List<MobileNumberResponse> mobileNumbers) {
         this.mobileNumbers = mobileNumbers;
     }

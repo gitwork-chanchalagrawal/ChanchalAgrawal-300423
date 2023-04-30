@@ -11,6 +11,7 @@ public class CustomerRequest {
     @NotBlank(message = "Last name is required")
     private String lastName;
 
+    //for fourth requirement
     private List<@NotBlank(message = "Mobile number is required") 
     			@Pattern(regexp = "\\d{10}", message = "Mobile number must be 10 digits")
     			String> mobileNumbers;
@@ -39,10 +40,12 @@ public class CustomerRequest {
         this.lastName = lastName;
     }
 
+    //for fourth requirements
     public List<String> getMobileNumbers() {
         return mobileNumbers;
     }
 
+    //for fourth requirements
     public void setMobileNumbers(List<String> mobileNumbers) {
         this.mobileNumbers = mobileNumbers;
     
